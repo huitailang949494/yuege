@@ -1,0 +1,47 @@
+{% include "base.html" %}
+{% include "nav.html" %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<div id="container" styles="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script type="text/javascript">
+$(function () {
+    Highcharts.chart('container', {
+        title: {
+            text: '人数增长',
+            x: -20 //center
+        },
+        xAxis: {
+            categories: {{last_month}}
+        },
+        yAxis: {
+            title: {
+                text: '实时人数 (个)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '个'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: '注册人数',
+            data: {{user_count}}
+        }, {
+            name: '付费注册数',
+            data: {{registration_count}}
+        }, {
+            name: '付费人数',
+            data: {{user_received_count}}
+        }]
+    });
+});
+</script>

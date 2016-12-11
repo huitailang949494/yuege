@@ -23,7 +23,7 @@ class Paper(models.Model):
     paper_rank = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.author_id
+        return self.paper_id
 
 
 class Paper_Author_Affiliations(models.Model):

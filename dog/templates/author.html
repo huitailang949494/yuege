@@ -1,0 +1,98 @@
+{% include "base.html" %}
+{% include "nav.html" %}
+<body>
+<h2 class="sub-header">Section title</h2>
+<div class="container projects">
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Author name</th>
+				<th>Author id</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for author in authors %}
+		<tr>
+			<td><a href='/author/?id={{author.author_id}}'>{{author.author_name}}</a></td>			
+			<td>{{author.author_id}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% if is_search %}
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Paper id</th>
+				<th>Original title</th>
+				<th>Normalized title</th>
+				<th>Publish year</th>
+				<th>Publish date</th>
+				<th>DOI</th>
+				<th>Original venue name</th>
+				<th>Normalized venue name</th>
+				<th>Jornal id</th>
+				<th>Conference id</th>
+				<th>Paper rank</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for paper in papers %}
+		<tr>
+			<td>{{paper.paper_id}}</td>			
+			<td>{{paper.original_title}}</td>
+			<td>{{paper.normalized_title}}</td>
+			<td>{{paper.publish_year}}</td>
+			<td>{{paper.publish_date}}</td>
+			<td>{{paper.DOI}}</td>
+			<td>{{paper.original_venue_name}}</td>
+			<td>{{paper.normalized_venue_name}}</td>
+			<td>{{paper.jornal_id}}</td>
+			<td>{{paper.conference_id}}</td>
+			<td>{{paper.paper_rank}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
+<div id="container" style="height: 400px; min-width: 310px"></div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+{% block javascript %}
+<script type="text/javascript">
+$(function () {
+
+    $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+        // Create the chart
+        Highcharts.stockChart('container', {
+
+
+            rangeSelector: {
+                selected: 1
+            },
+
+            title: {
+                text: 'Paper数量'
+            },
+
+            series: [{
+                name: 'AAPL',
+                data: data,
+                tooltip: {
+                    valueDecimals: 2
+                }
+            }]
+        });
+    });
+
+});
+</script>
+{% endblock %}
+{% endif %}
+</div>
+
+</body>
