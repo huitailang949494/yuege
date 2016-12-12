@@ -18,16 +18,25 @@ def author_list(request):
         if request.GET.get('id2'):
             authors = authors | Author.objects.filter(author_id=request.GET.get('id2'))
         affiliations = Paper_Author_Affiliations.objects.all()
+        affiliations = set(affiliations)
+        paper_ids2 = set([])
+        cnt = 0
         for author in authors:
-            affiliations = affiliations & Paper_Author_Affiliations.objects.filter(author_id=author)
-        paper_ids = []
-        for affiliation in affiliations:
-            if affiliation.paper_id not in paper_ids:
-                paper_ids.append(affiliation.paper_id)
-        print paper_ids
+            affiliations = Paper_Author_Affiliations.objects.filter(author=author)
+            paper_ids = []
+            for affiliation in affiliations:
+                if affiliation.paper.paper_id not in paper_ids:
+                    paper_ids.append(affiliation.paper.paper_id)
+            if cnt == 0:
+                paper_ids2 = paper_ids
+                cnt = cnt + 1
+            else:
+                paper_ids2 = set(paper_ids) & set(paper_ids2)
+        print paper_ids2
+        paper_ids = list(paper_ids2)
         papers = Paper.objects.none()
         for paperid in paper_ids:
-            papers = papers | Paper.objects.filter(id=paperid)
+            papers = papers | Paper.objects.filter(paper_id=paperid)
     else:
         authors = Author.objects.all()
     return render(request, 'author.html', locals())

@@ -2,15 +2,15 @@ from django.db import models
 
 
 class Author(models.Model):
-    author_name = models.CharField(max_length=20)
-    author_id = models.CharField(max_length=20)
+    author_name = models.CharField(max_length=50)
+    author_id = models.CharField(max_length=50)
 
     def __unicode__(self):
         return self.author_id
 
 
 class Paper(models.Model):
-    paper_id = models.CharField(max_length=20)
+    paper_id = models.CharField(max_length=50)
     original_title = models.CharField(max_length=50)
     normalized_title = models.CharField(max_length=50)
     publish_year = models.IntegerField()
