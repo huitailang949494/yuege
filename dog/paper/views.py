@@ -27,7 +27,7 @@ def author_list(request):
         print paper_ids
         papers = Paper.objects.none()
         for paperid in paper_ids:
-            papers = papers | Paper.objects.filter(paper_id=paperid)
+            papers = papers | Paper.objects.filter(id=paperid)
     else:
         authors = Author.objects.all()
     return render(request, 'author.html', locals())
