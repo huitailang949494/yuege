@@ -29,6 +29,22 @@ ALLOWED_HOSTS = []
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
+PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
+TEMPLATES = [
+    {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [os.path.join(BASE_DIR, 'templates')],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                        'context_processors': [
+                                        'django.template.context_processors.debug',
+                                        'django.template.context_processors.request',
+                                        'django.contrib.auth.context_processors.auth',
+                                        'django.contrib.messages.context_processors.messages',
+                                    ],
+                    },
+        },
+]
 # Application definition
 
 INSTALLED_APPS = (
